@@ -37,15 +37,17 @@ describe('Functional on dashboard main page', () => {
       
     })
   
-    it.only('Verify Search Functionality (Valid Keyword)', () => {
+    it('Verify Search Functionality (Valid Keyword)', () => {
         cy.get("mat-toolbar app-search input").type("ministry")
         cy.get("#mat-autocomplete-0").click()
         cy.get("app-book-card mat-card").eq(0).contains("The Ministry of Truth: The Biography of George Orwell's \"1984\"")
-        //cy.get("mat-toolbar app-search input").contains("The Ministry of Truth: The Biography of George Orwell's \"1984\"")
+        cy.get("#mat-autocomplete-0").contains("The Ministry of Truth: The Biography of George Orwell's \"1984\"")
       
     })
   
-    it('Verify Search Functionality (Invalid Keyword)', () => {
+    it.only('Verify Search Functionality (Invalid Keyword)', () => {
+        cy.get("mat-toolbar app-search input").type("get start")
+        cy.get("app-book-card").should("have.length",45)
       
     })
   

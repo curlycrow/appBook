@@ -1,4 +1,11 @@
+
+import LoginPage from "../page-object/login-page"
+import basicUser from "../fixtures/basicUser.json"
+
 describe('Login Auth', () => {
+
+    const loginPage= new LoginPage()
+
     beforeEach('auth', () => {
         cy.visit('/login')
         
@@ -23,14 +30,16 @@ describe('Login Auth', () => {
         
     })
 
-    it('Verify Successful Logout After Login', () => {
-        cy.get('#mat-input-0').should('have.attr','placeholder',"Username")
-        cy.get('#mat-input-0').type('ontanke4')
-        cy.get('#mat-input-1').should('have.attr','placeholder',"Password")
-        cy.get('#mat-input-1').type('Good_4you')
-        cy.get(".mdc-button__label").filter(':contains("Login")').eq(1).click()
+    it.only('Verify Successful Logout After Login', () => {
+        loginPage.elements.usernameInput().should('have.attr','placeholder',"Username")
+
+        loginPage.typeUsername(basicUser.username)
+        loginPage.elements.passwordInput().should('have.attr','placeholder',"Password")
+
+        loginPage.typePassword(basicUser.password)
+        loginPage.clickLogin()
         cy.location("href").should("include", "/")
-        cy.get(".mdc-button__label").filter(':contains("ontanke4")').click()
+        cy.get(".mdc-button__label").contains(basicUser.username).click()
         cy.get(".mat-mdc-menu-item-text").should("have.length",2)
         cy.get(".mat-mdc-menu-item-text").eq(1).should("contain","Logout").click()
         cy.url().should("include","/login")
