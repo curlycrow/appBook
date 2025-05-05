@@ -37,7 +37,7 @@ describe('Login Auth', () => {
         
     })
 
-    it.only('failed login with using wrong username', () => {
+    it('failed login with using wrong username', () => {
         cy.get("#mat-input-0").type("miss_rindu")
         cy.get("#mat-input-1").type("Good_4you", { sensitive: true })
         cy.intercept('POST','/api/login').as('invalidateUsername')
