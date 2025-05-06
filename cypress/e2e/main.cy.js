@@ -51,7 +51,7 @@ describe('Functional on dashboard main page', () => {
       
     })
   
-    it.only('Verify "Add to Cart" Functionality', () => {
+    it('Verify "Add to Cart" Functionality', () => {
         cy.get("app-book-card").should("have.length",45)
         cy.get("app-book-card mat-card").eq(1).contains("Harry Potter and the Prisoner of Azkaban")
         cy.get("app-book-card mat-card app-addtocart").eq(1).click()

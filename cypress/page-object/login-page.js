@@ -12,10 +12,10 @@ class LoginPage{
     }
 
     typeUsername(username){
-        this.elements.usernameInput().type(username)
+        this.elements.usernameInput().type(username, { log: false })
     }
     typePassword(password){
-        this.elements.passwordInput().type(password)
+        this.elements.passwordInput().type(password, { log: false })
     }
 
     clickLogin(login){

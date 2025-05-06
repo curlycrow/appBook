@@ -1,9 +1,18 @@
-describe('purcashing book activity', () => {
-    beforeEach('user must be login befor chekcout book', () => {
+import LoginPage from "../page-object/login-page"
+import basicUser from "../fixtures/basicUser.json"
+
+describe.only('purcashing book activity', () => {
+    const loginPage= new LoginPage()
+    beforeEach('user must be login befor checkout book', () => {
         cy.visit("/login")
+        loginPage.typeUsername(basicUser.username)
+        loginPage.typePassword(basicUser.password)
+        loginPage.clickLogin()
+        cy.location("href").should("include", "/")
+        cy.get(".mdc-button__label").contains(basicUser.username).should("be.visible")
     })
 
-    it('Add a Single Book to Cart', () => {
+    it.only('Add a Single Book to Cart', () => {
         
     })
 
