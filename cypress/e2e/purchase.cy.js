@@ -53,11 +53,9 @@ describe('purcashing book activity', () => {
     
     })
 
-    it('Proceed to Checkout as Guest (If Allowed)', () => {
-        
-    })
 
-    it.only('Proceed to Checkout as Logged-In User', () => {
+
+    it('Proceed to Checkout as Logged-In User', () => {
         cy.get("mat-toolbar mat-icon").eq(2).contains("shopping_cart").click()
         cy.get("mat-card-content td button").eq(3).contains("CheckOut").click()
         cy.url().should("include","/checkout")
@@ -66,19 +64,31 @@ describe('purcashing book activity', () => {
         shippingPage.typeAddress2(address.addressLine2)
         shippingPage.typepincode(address.pincode)
         shippingPage.typestate(address.state)
+        shippingPage.clickOrder()
+        cy.url().should("include","/myorders")
+        cy.get("mat-card-content tbody td.mat-mdc-cell").eq(0).should("be.visible")
         
         
     })
 
     it('Validate Empty Cart Checkout Attempt', () => {
-
+        cy.get("mat-toolbar mat-icon").eq(2).contains("shopping_cart").click()
+        cy.get("mat-card-title").contains("Your shopping cart is empty.")
+        cy.url().should("include","/myorders")
     })
 
-    it('Complete Purchase with Valid Payment', () => {
+    it('Proceed to Checkout as Guest (If Allowed)', () => {
+        cy.get(".mdc-button__label").contains(basicUser.username).click()
+        cy.get(".mat-mdc-menu-item-text").should("have.length",2)
+        cy.get(".mat-mdc-menu-item-text").eq(1).should("contain","Logout").click()
+        cy.url().should("include","/login")
+        cy.visit("/")
+        cy.get("app-book-card mat-card app-addtocart").eq(1).click()
+        cy.get("mat-toolbar mat-icon").eq(1).contains("shopping_cart").click()
+        cy.get("mat-card-content tbody td.mat-mdc-cell").eq(1).contains("Harry Potter and the Prisoner of Azkaban")
+        cy.get("mat-card-content td button").eq(3).contains("CheckOut").click()
         
-    })
-
-    it('Verify Order Confirmation Email (If Applicable)', () => {
+        cy.url().should("include","/login")
         
     })
 

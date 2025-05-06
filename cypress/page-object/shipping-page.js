@@ -7,7 +7,7 @@ class ShippingPage{
         address2inpuT: ()=>cy.get("#mat-input-4"),
         pincodeInput:  ()=>cy.get("#mat-input-5"),
         stateInput: ()=>cy.get("#mat-input-6"),
-        orderButton: ()=>cy.get("")
+        orderButton: ()=>cy.get("mat-card-actions button span.mdc-button__label").eq(0).contains("Place Order")
     }
 
     visit(){
