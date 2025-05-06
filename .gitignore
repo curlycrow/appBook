@@ -2,3 +2,4 @@
 node_modules/
 
 cypress/support/commands/login.js
+cypress/fixtures/basicUser.json

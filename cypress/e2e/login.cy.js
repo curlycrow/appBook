@@ -30,12 +30,10 @@ describe('Login Auth', () => {
         
     })
 
-    it.only('Verify Successful Logout After Login', () => {
+    it('Verify Successful Logout After Login', () => {
         loginPage.elements.usernameInput().should('have.attr','placeholder',"Username")
-
         loginPage.typeUsername(basicUser.username)
         loginPage.elements.passwordInput().should('have.attr','placeholder',"Password")
-
         loginPage.typePassword(basicUser.password)
         loginPage.clickLogin()
         cy.location("href").should("include", "/")
@@ -46,9 +44,9 @@ describe('Login Auth', () => {
         
     })
 
-    it('failed login with using wrong username', () => {
+    it.only('failed login with using wrong username', () => {
         cy.get("#mat-input-0").type("miss_rindu")
-        cy.get("#mat-input-1").type("Good_4you", { sensitive: true })
+        cy.get("#mat-input-1").type("Good_4you", { log: false })
         cy.intercept('POST','/api/login').as('invalidateUsername')
         cy.get(".mdc-button__label").filter(':contains("Login")').eq(1).click()
 

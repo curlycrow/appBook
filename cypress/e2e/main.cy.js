@@ -45,13 +45,18 @@ describe('Functional on dashboard main page', () => {
       
     })
   
-    it.only('Verify Search Functionality (Invalid Keyword)', () => {
+    it('Verify Search Functionality (Invalid Keyword)', () => {
         cy.get("mat-toolbar app-search input").type("get start")
         cy.get("app-book-card").should("have.length",45)
       
     })
   
-    it('Verify "Add to Cart" Functionality', () => {
+    it.only('Verify "Add to Cart" Functionality', () => {
+        cy.get("app-book-card").should("have.length",45)
+        cy.get("app-book-card mat-card").eq(1).contains("Harry Potter and the Prisoner of Azkaban")
+        cy.get("app-book-card mat-card app-addtocart").eq(1).click()
+        cy.get("mat-toolbar mat-icon").eq(1).contains("shopping_cart").click()
+        cy.get("mat-card-content tbody td.mat-mdc-cell").eq(1).contains("Harry Potter and the Prisoner of Azkaban")
       
     })
   
