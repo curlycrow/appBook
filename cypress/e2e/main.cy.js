@@ -79,7 +79,7 @@ describe('Functional on dashboard main page', () => {
       
     })
   
-    it.only('Verify Cart Icon Navigation', () => {
+    it('Verify Cart Icon Navigation', () => {
         cy.get("mat-toolbar mat-icon").eq(1).contains("shopping_cart").click()
         cy.url().should("include","/shopping-cart")
 

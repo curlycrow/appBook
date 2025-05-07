@@ -2,5 +2,6 @@
 node_modules/
 
 cypress/support/commands/login.js
+cypress/fixtures/
 cypress/fixtures/basicUser.json
 cypress/fixtures/address.json

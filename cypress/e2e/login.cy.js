@@ -13,12 +13,12 @@ describe('Login Auth', () => {
 
     it('sucessfull login with right username', () => {
         cy.get('#mat-input-0').should('have.attr','placeholder',"Username")
-        cy.get('#mat-input-0').type('ontanke4')
+        loginPage.typeUsername(basicUser.username)
         cy.get('#mat-input-1').should('have.attr','placeholder',"Password")
-        cy.get('#mat-input-1').type('Good_4you')
-        cy.get(".mdc-button__label").filter(':contains("Login")').eq(1).click()
+        loginPage.typePassword(basicUser.password)
+        loginPage.clickLogin()
         cy.location("href").should("include", "/")
-        cy.get(".mdc-button__label").filter(':contains("ontanke4")').click()
+        cy.get(".mdc-button__label").contains(basicUser.username).click()
         cy.get(".mat-mdc-menu-item-text").should("have.length",2)
         cy.get(".mat-mdc-menu-item-text").eq(1).should("contain","Logout")
         cy.get("mat-icon.notranslate").eq(4).click({ force: true })
@@ -46,9 +46,9 @@ describe('Login Auth', () => {
 
     it.only('failed login with using wrong username', () => {
         cy.get("#mat-input-0").type("miss_rindu")
-        cy.get("#mat-input-1").type("Good_4you", { log: false })
+        loginPage.typePassword(basicUser.password)
         cy.intercept('POST','/api/login').as('invalidateUsername')
-        cy.get(".mdc-button__label").filter(':contains("Login")').eq(1).click()
+        loginPage.clickLogin()
 
         cy.wait('@invalidateUsername').then((interception)=>{
             expect(interception.response.statusCode).to.equal(401)
@@ -60,10 +60,10 @@ describe('Login Auth', () => {
     })
 
     it('failed login with using invalid password', () => {
-        cy.get("#mat-input-0").type("sen_budu")
-        cy.get("#mat-input-1").type("pasw0012d")
+        loginPage.typeUsername(basicUser.username)
+        loginPage.typePassword(basicUser.password)
         cy.intercept('POST','/api/login').as('invalidateUsername')
-        cy.get(".mdc-button__label").filter(':contains("Login")').eq(1).click()
+        loginPage.clickLogin()
 
         cy.wait('@invalidateUsername').then((interception)=>{
             expect(interception.response.statusCode).to.equal(401)
@@ -74,25 +74,25 @@ describe('Login Auth', () => {
     })
 
     it('Login process but  password not filled in', () => {
-        cy.get("#mat-input-0").type("sen_budu")
+        loginPage.typeUsername(basicUser.username)
         cy.get("#mat-input-1").clear()
-        cy.get(".mdc-button__label").filter(':contains("Login")').eq(1).click()
+        loginPage.clickLogin()
         cy.get("#mat-mdc-error-0").should("contain","Password is required")
         
     })
 
     it('Login process but  username not filled in', () => {
         cy.get("#mat-input-0").clear()
-        cy.get("#mat-input-1").type("sen_budu")
-        cy.get(".mdc-button__label").filter(':contains("Login")').eq(1).click()
+        cy.get("#mat-input-1").type("pacew0rd")
+        loginPage.clickLogin()
         cy.get("#mat-mdc-error-0").should("contain","Username is required")
     })
 
     it('Login but leaving username and password with typing only a space', () => {
-        cy.get("#mat-input-0").type(" ")
-        cy.get("#mat-input-1").type(" ")
+        loginPage.typeUsername(" ")
+        loginPage.typePassword(" ")
         cy.intercept('POST','/api/login').as('invalidateUsername')
-        cy.get(".mdc-button__label").filter(':contains("Login")').eq(1).click()
+        loginPage.clickLogin()
 
         cy.wait('@invalidateUsername').then((interception)=>{
             expect(interception.response.statusCode).to.equal(401)
@@ -103,7 +103,7 @@ describe('Login Auth', () => {
     it('Login but leaving username and password with empty', () => {
         cy.get("#mat-input-0").clear()
         cy.get("#mat-input-1").clear()
-        cy.get(".mdc-button__label").filter(':contains("Login")').eq(1).click()
+        loginPage.clickLogin()
         cy.get("#mat-mdc-error-0").should("contain","Username is required")
         cy.get("#mat-mdc-error-1").should("contain","Password is required")
 
