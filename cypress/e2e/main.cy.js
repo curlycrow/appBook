@@ -61,18 +61,36 @@ describe('Functional on dashboard main page', () => {
     })
   
     it('Verify Book Details Page Navigation', () => {
+        cy.get("app-book-card").should("have.length",45)
+        cy.get("app-book-card mat-card").eq(15).contains("The Simple Wild").click()
+        cy.get("app-book-details mat-card-content img[src$='.jpg']").eq(0).should("exist").and("be.visible")
+        cy.get("table tr").eq(0).should("contain", "Title").find("td").eq(1).should("not.be.empty")
+        cy.get("table tr").eq(1).should("contain", "Author").find("td").eq(1).should("not.be.empty")
+        cy.get("table tr").eq(2).should("contain", "Category").find("td").eq(1).should("not.be.empty")
+        cy.get("table tr").eq(3).should("contain", "Price").find("td").eq(1).should("not.be.empty")
       
     })
   
     it('Verify Login/Register Navigation Links', () => {
+        cy.get(".mdc-button__label").contains("Login").click()
+        cy.location("href").should("include", "/login")
+        cy.get("mat-card-header button").contains("Register").click()
+        cy.location("href").should("include", "/register")
       
     })
   
-    it('Verify Cart Icon Navigation', () => {
+    it.only('Verify Cart Icon Navigation', () => {
+        cy.get("mat-toolbar mat-icon").eq(1).contains("shopping_cart").click()
+        cy.url().should("include","/shopping-cart")
+
       
     })
   
-    it('Verify Featured Books Section (If Applicable)', () => {
+    it.only('Verify Featured Books Section (If Applicable)', () => {
+        cy.get("mat-list-item").eq(2).should("contain", "Fiction").click()
+        cy.url().should("include","/filter?category=fiction")
+        cy.get("app-book-card").should("have.length",10)
+
       
     })
   
