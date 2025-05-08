@@ -44,7 +44,7 @@ describe('Login Auth', () => {
         
     })
 
-    it.only('failed login with using wrong username', () => {
+    it('failed login with using wrong username', () => {
         cy.get("#mat-input-0").type("miss_rindu")
         loginPage.typePassword(basicUser.password)
         cy.intercept('POST','/api/login').as('invalidateUsername')
@@ -61,7 +61,7 @@ describe('Login Auth', () => {
 
     it('failed login with using invalid password', () => {
         loginPage.typeUsername(basicUser.username)
-        loginPage.typePassword(basicUser.password)
+        loginPage.typePassword("do12_kukung")
         cy.intercept('POST','/api/login').as('invalidateUsername')
         loginPage.clickLogin()
 

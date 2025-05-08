@@ -86,7 +86,7 @@ describe('Functional on dashboard main page', () => {
       
     })
   
-    it.only('Verify Featured Books Section (If Applicable)', () => {
+    it('Verify Featured Books Section (If Applicable)', () => {
         cy.get("mat-list-item").eq(2).should("contain", "Fiction").click()
         cy.url().should("include","/filter?category=fiction")
         cy.get("app-book-card").should("have.length",10)

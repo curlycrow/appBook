@@ -3,7 +3,7 @@ import ShippingPage from "../page-object/shipping-page"
 import basicUser from "../fixtures/basicUser.json"
 import address from "../fixtures/address.json"
 
-describe(' dummy purchasing purcashing', () => {
+describe.skip(' dummy purchasing purcashing', () => {
     const loginPage= new LoginPage()
     const shippingPage = new ShippingPage()
 

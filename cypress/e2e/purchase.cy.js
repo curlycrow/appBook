@@ -46,14 +46,6 @@ describe('purcashing book activity', () => {
         cy.get("mat-card-content tbody td button.mdc-icon-button").eq(0).contains("remove_circle").click()
     })
 
-    it('Remove a Book from Cart', () => {
-        cy.get("mat-toolbar mat-icon").eq(2).contains("shopping_cart").click()
-        cy.get("mat-card-content tbody td.mat-mdc-cell").eq(1).contains("Harry Potter and the Prisoner of Azkaban")
-        cy.get("mat-card-content tbody td button.mdc-icon-button").eq(2).contains("delete").click()
-    
-    })
-
-
 
     it('Proceed to Checkout as Logged-In User', () => {
         cy.get("mat-toolbar mat-icon").eq(2).contains("shopping_cart").click()
@@ -71,10 +63,19 @@ describe('purcashing book activity', () => {
         
     })
 
+    it('Remove a Book from Cart', () => {
+        cy.get("app-book-card mat-card").eq(1).contains("Harry Potter and the Prisoner of Azkaban")
+        cy.get("app-book-card mat-card app-addtocart").eq(1).click()
+        cy.get("mat-toolbar mat-icon").eq(2).contains("shopping_cart").click()
+        cy.get("mat-card-content tbody td.mat-mdc-cell").eq(1).contains("Harry Potter and the Prisoner of Azkaban")
+        cy.get("mat-card-content tbody td button.mdc-icon-button").eq(2).contains("delete").click()
+    
+    })
+
     it('Validate Empty Cart Checkout Attempt', () => {
         cy.get("mat-toolbar mat-icon").eq(2).contains("shopping_cart").click()
         cy.get("mat-card-title").contains("Your shopping cart is empty.")
-        cy.url().should("include","/myorders")
+        cy.url().should("include","/shopping-cart")
     })
 
     it('Proceed to Checkout as Guest (If Allowed)', () => {

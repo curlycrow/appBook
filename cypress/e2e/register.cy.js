@@ -71,13 +71,12 @@ describe('Functional Test Register Menu', () => {
 
     })
 
-    it.only('Registration with Password Mismatch', () => {
+    it('Registration with Password Mismatch', () => {
         cy.get("#mat-input-0").type("kiki")
         cy.get("#mat-input-1").type("sampan")
         registerPage.typeUsername(register.username)
         registerPage.typePassword(register.password)
-        registerPage.typeREPassword(register.password)
-        cy.get("#mat-input-4").type("pes_word")
+        registerPage.typeREPassword("kukung_do12")
         cy.get("#mat-radio-0-input").check()
         
         // cy.contains('button', 'Register').click()
