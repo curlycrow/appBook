@@ -1,6 +1,10 @@
+import RegisterPage from "../page-object/register-page"
 import register from "../fixtures/register.json"
 
 describe('Functional Test Register Menu', () => {
+
+    const registerPage= new RegisterPage()
+
     beforeEach(()=>{
         cy.log("start from visit login test")
         cy.visit('/register')
@@ -9,8 +13,8 @@ describe('Functional Test Register Menu', () => {
         cy.get("#mat-input-0").type("baka")
         cy.get("#mat-input-1").type("senco")
         cy.get("#mat-input-2").type("sen_budu10")
-        cy.get("#mat-input-3").type(register.password)
-        cy.get("#mat-input-4").type("Good_4you")
+        registerPage.typePassword(register.password)
+        registerPage.typeREPassword(register.password)
         cy.get("#mat-radio-0-input").check()
         
         
@@ -46,8 +50,8 @@ describe('Functional Test Register Menu', () => {
         cy.get("#mat-input-0").type("baka")
         cy.get("#mat-input-1").type("senco")
         cy.get("#mat-input-2").type("sen_budu")
-        cy.get("#mat-input-3").type(register.password)
-        cy.get("#mat-input-4").type(register.password)
+        registerPage.typePassword(register.password)
+        registerPage.typeREPassword(register.password)
         cy.get("#mat-radio-0-input").check()
         
         // cy.contains('button', 'Register').click()
@@ -70,8 +74,9 @@ describe('Functional Test Register Menu', () => {
     it.only('Registration with Password Mismatch', () => {
         cy.get("#mat-input-0").type("kiki")
         cy.get("#mat-input-1").type("sampan")
-        cy.get("#mat-input-2").type(register.username)
-        cy.get("#mat-input-3").type(register.password)
+        registerPage.typeUsername(register.username)
+        registerPage.typePassword(register.password)
+        registerPage.typeREPassword(register.password)
         cy.get("#mat-input-4").type("pes_word")
         cy.get("#mat-radio-0-input").check()
         
@@ -96,8 +101,8 @@ describe('Functional Test Register Menu', () => {
         cy.get("#mat-input-0").type("kiki")
         cy.get("#mat-input-1").type("sampan")
         cy.get("#mat-input-2").clear()
-        cy.get("#mat-input-3").type(register.password)
-        cy.get("#mat-input-4").type(register.password)
+        registerPage.typePassword(register.password)
+        registerPage.typeREPassword(register.password)
         cy.get("#mat-radio-0-input").check()
         
         cy.contains('button', 'Register').click()
@@ -134,8 +139,8 @@ describe('Functional Test Register Menu', () => {
         cy.get("#mat-input-0").clear()
         cy.get("#mat-input-1").type("sampan")
         cy.get("#mat-input-2").type(register.username)
-        cy.get("#mat-input-3").type(register.password)
-        cy.get("#mat-input-4").type(register.password)
+        registerPage.typePassword(register.password)
+        registerPage.typeREPassword(register.password)
         cy.get("#mat-radio-0-input").check()
         
         // cy.contains('button', 'Register').click()
@@ -158,8 +163,8 @@ describe('Functional Test Register Menu', () => {
         cy.get("#mat-input-0").type("kiki")
         cy.get("#mat-input-1").clear()
         cy.get("#mat-input-2").type(register.username)
-        cy.get("#mat-input-3").type(register.password)
-        cy.get("#mat-input-4").type(register.password)
+        registerPage.typePassword(register.password)
+        registerPage.typeREPassword(register.password)
         cy.get("#mat-radio-0-input").check()
         
         // cy.contains('button', 'Register').click()
@@ -182,8 +187,8 @@ describe('Functional Test Register Menu', () => {
         cy.get("#mat-input-0").type("kiki")
         cy.get("#mat-input-1").type("panda")
         cy.get("#mat-input-2").type(register.username)
-        cy.get("#mat-input-3").type(register.password)
-        cy.get("#mat-input-4").type(register.password)
+        registerPage.typePassword(register.password)
+        registerPage.typeREPassword(register.password)
         
         // cy.contains('button', 'Register').click()
         cy.intercept('GET', '/api/user/validateUserName/*').as('validateUsername')
@@ -206,8 +211,8 @@ describe('Functional Test Register Menu', () => {
         cy.get("#mat-input-0").type("kiki")
         cy.get("#mat-input-1").type("panda")
         cy.get("#mat-input-2").type("kiki_p@n*")
-        cy.get("#mat-input-3").type(register.password)
-        cy.get("#mat-input-4").type(register.password)
+        registerPage.typePassword(register.password)
+        registerPage.typeREPassword(register.password)
         cy.get("#mat-radio-0-input").check()
         
         cy.intercept('GET', '/api/user/validateUserName/*').as('validateUsername')
