@@ -1,7 +1,12 @@
 #dependecies
-node_modules/
 
+#folder
+node_modules/
+cypress/fixtures/
+
+#file
 cypress/support/commands/login.js
 cypress/fixtures/
 cypress/fixtures/basicUser.json
 cypress/fixtures/address.json
+cypress/e2e/welcome.cy.js
